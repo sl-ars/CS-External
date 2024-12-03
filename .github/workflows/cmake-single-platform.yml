@@ -21,13 +21,6 @@ jobs:
       with:
         cmake-version: "3.22"
 
-    - name: Set up MSVC
-      shell: pwsh
-      run: |
-        # Ensure MSVC environment is loaded
-        echo "::set-env name=VSCMD_DEBUG::true"
-        cmd.exe /C "call \"%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat\""
-
     - name: Configure CMake
       run: |
         mkdir build
