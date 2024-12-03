@@ -1,0 +1,40 @@
+name: Windows CMake Build
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up CMake
+      uses: jwlawson/actions-setup-cmake@v1
+      with:
+        cmake-version: "3.22"
+
+    - name: Set up MSVC
+      shell: pwsh
+      run: |
+        # Ensure MSVC environment is loaded
+        echo "::set-env name=VSCMD_DEBUG::true"
+        cmd.exe /C "call \"%VSINSTALLDIR%\VC\Auxiliary\Build\vcvars64.bat\""
+
+    - name: Configure CMake
+      run: |
+        mkdir build
+        cd build
+        cmake -G "Visual Studio 17 2022" -A x64 ..
+
+    - name: Build the Project
+      run: |
+        cd build
+        cmake --build . --config Release
