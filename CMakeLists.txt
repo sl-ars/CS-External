@@ -91,8 +91,8 @@ target_link_libraries(Cs2External
 
 # Add compile options
 target_compile_options(Cs2External PRIVATE
-    $<$<CONFIG:Debug>:-Wall -Wextra>
-    $<$<CONFIG:Release>:-O3>
+    $<$<CXX_COMPILER_ID:MSVC>:/W3 /O2>
+    $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra -O3>
 )
 
 # Add include directories for target
