@@ -1,15 +1,12 @@
 cmake_minimum_required(VERSION 3.20)
-
-# Set project name and version
 project(Cs2External LANGUAGES CXX)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Define build configurations
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "Supported build configurations" FORCE)
+# Add preprocessor definitions for Unicode support
+add_compile_definitions(UNICODE _UNICODE)
 
 # Include directories
 include_directories(
@@ -21,7 +18,7 @@ include_directories(
     Source/ExternalLibs/Json
 )
 
-# Source files
+# Add source files
 set(SOURCES
     Cheats/main.cpp
     Source/ExternalLibs/ImGui/imgui.cpp
@@ -33,7 +30,7 @@ set(SOURCES
     Source/ExternalLibs/ImGui/imgui_widgets.cpp
 )
 
-# Header files (optional, for IDE integration)
+# Add header files (optional for IDE integration)
 set(HEADERS
     Cheats/Hacks/Aimbot.hpp
     Cheats/Hacks/Antiflash.hpp
@@ -92,10 +89,10 @@ target_link_libraries(Cs2External
     d3d11
 )
 
-# Set compile options for different configurations
-target_compile_definitions(Cs2External PRIVATE
-    $<$<CONFIG:Debug>:_DEBUG>
-    $<$<CONFIG:Release>:NDEBUG>
+# Add compile options
+target_compile_options(Cs2External PRIVATE
+    $<$<CONFIG:Debug>:-Wall -Wextra>
+    $<$<CONFIG:Release>:-O3>
 )
 
 # Add include directories for target
