@@ -81,7 +81,8 @@ set(HEADERS
 )
 
 # Add executable target
-add_executable(Cs2External ${SOURCES} ${HEADERS})
+add_executable(Cs2External WIN32 ${SOURCES} ${HEADERS})
+
 
 # Link libraries
 target_link_libraries(Cs2External
