@@ -3,10 +3,10 @@ name: Windows CMake Build
 on:
   push:
     branches:
-      - main  # Trigger on pushes to the main branch
+      - main  # Trigger workflow on pushes to the main branch
   pull_request:
     branches:
-      - main  # Trigger on pull requests to the main branch
+      - main  # Trigger workflow on pull requests to the main branch
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
     - name: Set up CMake
       uses: jwlawson/actions-setup-cmake@v1
       with:
-        cmake-version: "3.22"
+        cmake-version: "3.22"  # Specify the required version of CMake
 
     - name: Configure CMake
       run: |
@@ -31,3 +31,9 @@ jobs:
       run: |
         cd build
         cmake --build . --config Release
+
+    - name: Upload Executable
+      uses: actions/upload-artifact@v3
+      with:
+        name: Cs2External-Executable
+        path: build/Release/Cs2External.exe  # Adjust path if needed
